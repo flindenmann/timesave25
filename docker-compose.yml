@@ -1,17 +1,18 @@
-version: '3.8'
+# docker-compose.yml (Compose v2 – keine version-Zeile nötig)
 
 services:
   backend:
     build: ./backend
     ports:
       - "5001:5000"
-    volumes:
-      - ./backend:/app
     environment:
       DB_HOST: db
       DB_USER: root
       DB_PASSWORD: example
       DB_NAME: myapp
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
     depends_on:
       - db
 
@@ -19,8 +20,14 @@ services:
     build: ./frontend
     ports:
       - "3000:3000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - BROWSERSLIST_IGNORE_OLD_DATA=true
     volumes:
       - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
     stdin_open: true
     tty: true
 
@@ -34,6 +41,18 @@ services:
     volumes:
       - db_data:/var/lib/mysql
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: example
+    depends_on:
+      - db
 
 volumes:
   db_data:
