@@ -1,5 +1,16 @@
+# Node
 node_modules/
-db_data/
-*.log
+npm-debug.log*
+yarn.lock
+pnpm-lock.yaml
+
+# Builds / Bundles
+dist/
+build/
+
+# env & misc
 .env
 .DS_Store
+
+db_data/
+*.log
