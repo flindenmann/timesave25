@@ -1,6 +1,10 @@
 // backend/app.js
 const express = require('express');
 const customersRouter = require('./routes/customers');
+const contractsRouter   = require('./routes/contracts');
+const contractposRouter = require('./routes/contractpos');
+const employeesRouter   = require('./routes/employees');
+const costcentersRouter = require('./routes/costcenters');
 
 const app = express();
 
@@ -22,6 +26,12 @@ app.use((req, res, next) => {
 app.use(express.json());
 
 app.use('/api/customers', customersRouter);
+app.use('/api/contracts', contractsRouter);
+app.use('/api/contractpos', contractposRouter);
+app.use('/api/employees', require('./routes/employees'));
+app.use('/api/costcenters', require('./routes/costcenters'));
+app.use('/api/employees', employeesRouter);
+app.use('/api/costcenters', costcentersRouter);
 
 app.get('/healthz', (_req, res) => res.json({ ok: true }));
 
