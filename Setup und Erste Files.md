@@ -7,6 +7,11 @@
 docker compose up --build -d
 ```
 
+### Container phpmyadmin starten
+```bash
+docker compose up -d phpmyadmin
+```
+
 ### Container stoppen & löschen
 ```bash
 docker compose down
